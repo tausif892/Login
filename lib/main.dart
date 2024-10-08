@@ -1,14 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:login/controller/language_change_controller.dart';
-import 'package:login/home_screen.dart';
 import 'package:login/lang_change.dart';
-import 'package:login/login.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:login/checklists.dart';
-import 'package:login/dashboard.dart';
-import 'package:flutter_web_plugins/url_strategy.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -18,12 +13,14 @@ void main() async {
   runApp(
     ChangeNotifierProvider(
       create: (_) => languageController,
-      child: MyApp(),
+      child: const MyApp(),
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Consumer<LanguageChangeController>(
@@ -31,18 +28,18 @@ class MyApp extends StatelessWidget {
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           locale: languageController.appLocale,
-          supportedLocales: [
+          supportedLocales: const [
             Locale('en', ''),
             Locale('hi', ''),
             Locale('ka', ''),
           ],
-          localizationsDelegates: [
+          localizationsDelegates: const [
             GlobalMaterialLocalizations.delegate,
             GlobalWidgetsLocalizations.delegate,
             GlobalCupertinoLocalizations.delegate,
             AppLocalizations.delegate, // Your localization delegate
           ],
-          home:  HomeScreen(),
+          home: const LangChange(),
         );
       },
     );

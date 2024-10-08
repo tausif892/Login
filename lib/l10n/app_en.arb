@@ -110,7 +110,18 @@
   "alcohol": "Last date of alcohol consumption:",
   "week": "Week",
   "weight": "Weight (Kg):",
-  "weight_hint": "Enter weight"
-
-
+  "weight_hint": "Enter weight",
+  "physiotherapy": "Physiotherapy",
+  "prep_ques_one": "Have you booked the room for your visit this time?",
+  "prep_ques_two": "Have you remembered to take your ESI/ Insurance application?",
+  "prep_ques_three": "Have you packed all the medications you need to bring along?",
+  "prep_ques_four": "Do you have your Incentive Spirometer packed for the visit?",
+  "prep_ques_five": "If you have any CTs/MRIs or outside DVDs you need to show us, hava you packed them?",
+  "steps": "Number of steps walked",
+  "stairs": "Number of stairs climbed",
+  "running": "Total time running",
+  "morning": "Morning",
+  "afternoon": "Afternoon",
+  "evening": "Evening",
+  "pain_and_exercise_register": "Pain and Exercise Register"
 }

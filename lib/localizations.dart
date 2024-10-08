@@ -27,7 +27,7 @@ class AppLocalizations {
   }
 
   String translate(String key) {
-    return _localizedStrings![key]!;
+    return _localizedStrings![key] ?? '';
   }
 }
 
@@ -36,7 +36,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
 
   @override
   bool isSupported(Locale locale) {
-    return ['en', 'hi'].contains(locale.languageCode);
+    return ['en', 'hi', 'ka'].contains(locale.languageCode);
   }
 
   @override

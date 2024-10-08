@@ -1,11 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:login/controller/language_change_controller.dart';
 import 'package:login/esophegal_cancer.dart';
 import 'package:login/stomach_cancer.dart';
-import 'package:provider/provider.dart';
-import 'package:login/login.dart';
 import 'package:login/lung_cancer.dart';
 import 'package:login/ovarian_cancer.dart';
 
@@ -30,77 +26,77 @@ class _ChecklistsState extends State<Checklists> {
       body:Center( child:  Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const Padding(padding: const EdgeInsets.all(20)),
-          Container(
+          const Padding(padding: EdgeInsets.all(20)),
+          SizedBox(
             height: 50,
             child: Center(child: Text(AppLocalizations.of(context)!.cond,
-                style:TextStyle(
+                style:const TextStyle(
                     fontSize: 40, fontWeight: FontWeight.bold
                 ),
             ),
             ),
           ),
-          Padding(padding: const EdgeInsets.all(10),),
+          const Padding(padding: EdgeInsets.all(10),),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Center(child: Text(AppLocalizations.of(context)!.lung, style: TextStyle(fontSize: 30),
+              Center(child: Text(AppLocalizations.of(context)!.lung, style: const TextStyle(fontSize: 30),
               ),
           ),
-              Padding(padding: const EdgeInsets.all(20),),
+              const Padding(padding: EdgeInsets.all(20),),
               ElevatedButton(onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) =>LungCancer())
+                  MaterialPageRoute(builder: (context) =>const LungCancer())
                 );
-              }, child: Icon(Icons.arrow_circle_right_sharp))
+              }, child: const Icon(Icons.arrow_circle_right_sharp))
           ],
           ),
-          Padding(padding: const EdgeInsets.all(3),),
+          const Padding(padding: EdgeInsets.all(3),),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
           children: [
-          Center(child: Text(AppLocalizations.of(context)!.stomach, style: TextStyle(fontSize: 30),
+          Center(child: Text(AppLocalizations.of(context)!.stomach, style: const TextStyle(fontSize: 30),
     ),
     ),
-            Padding(padding: const EdgeInsets.all(20),),
+            const Padding(padding: EdgeInsets.all(20),),
     ElevatedButton(onPressed: () {
       Navigator.push(
           context,
-          MaterialPageRoute(builder: (context) =>StomachCancer())
+          MaterialPageRoute(builder: (context) =>const StomachCancer())
       );
     },
-        child: Icon(Icons.arrow_circle_right_sharp))
+        child: const Icon(Icons.arrow_circle_right_sharp))
           ],
         ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Center(child: Text(AppLocalizations.of(context)!.ovary, style: TextStyle(fontSize: 30),
+              Center(child: Text(AppLocalizations.of(context)!.ovary, style: const TextStyle(fontSize: 30),
               ),
               ),
-              Padding(padding: const EdgeInsets.all(20),),
+              const Padding(padding: EdgeInsets.all(20),),
               ElevatedButton(onPressed: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) =>OvarianCancer())
+                    MaterialPageRoute(builder: (context) =>const OvarianCancer())
                 );
-              }, child: Icon(Icons.arrow_circle_right_sharp))
+              }, child: const Icon(Icons.arrow_circle_right_sharp))
             ],
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Center(child: Text(AppLocalizations.of(context)!.eso, style: TextStyle(fontSize: 30),
+              Center(child: Text(AppLocalizations.of(context)!.eso, style: const TextStyle(fontSize: 30),
               ),
               ),
-              Padding(padding: const EdgeInsets.all(20),),
+              const Padding(padding: EdgeInsets.all(20),),
               ElevatedButton(onPressed: () {
                 Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) =>EsophegalCancer())
+                    MaterialPageRoute(builder: (context) =>const EsophegalCancer())
                 );
-              }, child: Icon(Icons.arrow_circle_right_sharp))
+              }, child: const Icon(Icons.arrow_circle_right_sharp))
             ],
           ),
         ],

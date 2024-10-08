@@ -1,16 +1,10 @@
-import 'dart:ui';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:login/checklists.dart';
-import 'package:login/controller/language_change_controller.dart';
-import 'package:login/nutrition_page.dart';
-import 'package:provider/provider.dart';
-import 'package:login/login.dart';
-import 'package:login/checklists.dart';
 
 class NutritionPage extends StatefulWidget {
+  const NutritionPage({super.key});
+
   @override
   _NutritionPageState createState() => _NutritionPageState();
 }
@@ -47,7 +41,7 @@ class _NutritionPageState extends State<NutritionPage> {
     return Row(
       children: [
         Text('${AppLocalizations.of(context)!.week}  $week ${AppLocalizations.of(context)!.weight}'),
-        SizedBox(width: 20),
+        const SizedBox(width: 20),
         Expanded(
           child: TextField(
             keyboardType: TextInputType.number,
@@ -76,23 +70,23 @@ class _NutritionPageState extends State<NutritionPage> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(AppLocalizations.of(context)!.diet_chart),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   ElevatedButton(
                     onPressed: () {
                       // Action to link to diet chart
                     },
                     child: Text(AppLocalizations.of(context)!.diet_but),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(AppLocalizations.of(context)!.protein),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   TextField(
                     decoration: InputDecoration(hintText: AppLocalizations.of(context)!.prot_hint),
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(AppLocalizations.of(context)!.w_chart),
                   for (int i = 0; i < 5; i++) _buildWeightRow(i),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(AppLocalizations.of(context)!.bmi),
                   TextField(
                     controller: bmiController,
@@ -104,7 +98,7 @@ class _NutritionPageState extends State<NutritionPage> {
                       });
                     },
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(AppLocalizations.of(context)!.alb),
                   TextField(
                     controller: albuminController,
@@ -116,31 +110,31 @@ class _NutritionPageState extends State<NutritionPage> {
                       });
                     },
                   ),
-                  SizedBox(height: 20),
-                  Divider(),
+                  const SizedBox(height: 20),
+                  const Divider(),
                   Text(AppLocalizations.of(context)!.hab),
-                  SizedBox(height: 10),
+                  const SizedBox(height: 10),
                   Text(AppLocalizations.of(context)!.date),
                   Row(
                     children: [
                       Text(lastSmokingDate == null
                           ? AppLocalizations.of(context)!.date_but
                           : '${lastSmokingDate?.toLocal()}'.split(' ')[0]),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       ElevatedButton(
                         onPressed: () => _selectDate(context, true),
                         child: Text(AppLocalizations.of(context)!.date_but),
                       ),
                     ],
                   ),
-                  SizedBox(height: 20),
+                  const SizedBox(height: 20),
                   Text(AppLocalizations.of(context)!.alcohol),
                   Row(
                     children: [
                       Text(lastAlcoholDate == null
                           ? AppLocalizations.of(context)!.date
                           : '${lastAlcoholDate?.toLocal()}'.split(' ')[0]),
-                      SizedBox(width: 10),
+                      const SizedBox(width: 10),
                       ElevatedButton(
                         onPressed: () => _selectDate(context, false),
                         child: Text(AppLocalizations.of(context)!.date_but),

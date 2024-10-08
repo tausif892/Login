@@ -1,10 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:login/controller/language_change_controller.dart';
-import 'package:login/home_screen.dart';
-import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
-import 'package:login/checklists.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LungCancer extends StatefulWidget {

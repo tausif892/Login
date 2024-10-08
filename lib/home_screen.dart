@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:login/controller/language_change_controller.dart';
 import 'package:provider/provider.dart';
@@ -27,7 +26,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         children: [
-          SizedBox(
+          const SizedBox(
             height: 50,
             child: Center(
               child: DropDownButtonExample(),
@@ -40,10 +39,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Login())
+                    MaterialPageRoute(builder: (context) => const Login())
                   );
                 },
-                child: Icon(Icons.arrow_circle_right_sharp),
+                child: const Icon(Icons.arrow_circle_right_sharp),
               ),
             ),
           ),

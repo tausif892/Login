@@ -17,7 +17,7 @@ class LanguageChangeController with ChangeNotifier {
     if (languageCode != null) {
       _appLocale = Locale(languageCode);
     } else {
-      _appLocale = Locale('en'); // Default to English if no language is saved
+      _appLocale = const Locale('en'); // Default to English if no language is saved
     }
     notifyListeners(); // Notify listeners after loading the language
   }
