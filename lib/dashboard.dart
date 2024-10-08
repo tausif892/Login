@@ -208,7 +208,7 @@ class _DashboardState extends State<Dashboard> {
                       } else if (item == Icons.check_box_outlined) {
                         Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PreparationList()));
                       } else if (item == Icons.sentiment_neutral_sharp) {
-                        Navigator.of(context).push(MaterialPageRoute(builder: (context) => const PainScale()));
+                        Navigator.of(context).push(MaterialPageRoute(builder: (context) =>  PainScale(patientId: widget.user_id)));
                       }
                     },
                     child: Container(

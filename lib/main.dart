@@ -4,6 +4,7 @@ import 'package:login/controller/language_change_controller.dart';
 import 'package:login/lang_change.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:login/painscale.dart' ;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -39,7 +40,7 @@ class MyApp extends StatelessWidget {
             GlobalCupertinoLocalizations.delegate,
             AppLocalizations.delegate, // Your localization delegate
           ],
-          home: const LangChange(),
+          home: LangChange(),
         );
       },
     );

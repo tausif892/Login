@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:http/http.dart' as http;
 
 class PainScale extends StatefulWidget {
-  const PainScale({super.key});
+  final String patientId;
+  PainScale({super.key, required this.patientId});
 
   @override
   State<PainScale> createState() => _PainScaleState();
@@ -143,6 +145,62 @@ class _PainScaleState extends State<PainScale> {
     });
   }
 
+  // Function to submit the collected data to the API
+  void _submitData() async {
+    final url = 'https://flask-q63d.onrender.com/pain_scale/patient_id=${widget.patientId}';
+    final request = http.MultipartRequest('POST', Uri.parse(url));
+
+    for (int i = 0; i < days; i++) {
+      final day = i + 1;
+      // Submitting data for each time period
+      request.fields['time_period'] = 'morning';
+      request.fields['pain_rating'] = painLevelsList[i][AppLocalizations.of(context)!.morning].toString();
+      request.fields['day'] = day.toString();
+      request.fields['patient_id'] = widget.patientId;
+
+      request.fields['time_period'] = 'afternoon';
+      request.fields['pain_rating'] = painLevelsList[i][AppLocalizations.of(context)!.afternoon].toString();
+      request.fields['day'] = day.toString();
+      request.fields['patient_id'] = widget.patientId;
+
+      request.fields['time_period'] = 'evening';
+      request.fields['pain_rating'] = painLevelsList[i][AppLocalizations.of(context)!.evening].toString();
+      request.fields['day'] = day.toString();
+      request.fields['patient_id'] = widget.patientId;
+
+      // Submitting activity levels
+      request.fields['activity_type'] = 'steps';
+      request.fields['activity_level'] = activityLevelsList[i][AppLocalizations.of(context)!.steps].toString();
+      request.fields['day'] = day.toString();
+      request.fields['patient_id'] = widget.patientId;
+
+      request.fields['activity_type'] = 'stairs';
+      request.fields['activity_level'] = activityLevelsList[i][AppLocalizations.of(context)!.stairs].toString();
+      request.fields['day'] = day.toString();
+      request.fields['patient_id'] = widget.patientId;
+
+      request.fields['activity_type'] = 'running';
+      request.fields['activity_level'] = activityLevelsList[i][AppLocalizations.of(context)!.running].toString();
+      request.fields['day'] = day.toString();
+      request.fields['patient_id'] = widget.patientId;
+    }
+
+    try {
+      final response = await request.send();
+
+      if (response.statusCode == 200) {
+        // Handle success response
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Data submitted successfully!")));
+      } else {
+        // Handle error response
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Failed to submit data. Please try again.")));
+      }
+    } catch (e) {
+      // Handle network error
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text("Network error: $e")));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -171,7 +229,10 @@ class _PainScaleState extends State<PainScale> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text("Day ${index + 1}", style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-                        const SizedBox(height: 8),
+                        Container(
+                          width: double.infinity-17,
+                        child: Column(
+                          children: [const SizedBox(height: 8),
                         _buildPainRow(index, AppLocalizations.of(context)!.morning),
                         _buildPainRow(index, AppLocalizations.of(context)!.afternoon),
                         _buildPainRow(index, AppLocalizations.of(context)!.evening),
@@ -179,85 +240,67 @@ class _PainScaleState extends State<PainScale> {
                         _buildActivityRow(index, AppLocalizations.of(context)!.steps),
                         _buildActivityRow(index, AppLocalizations.of(context)!.stairs),
                         _buildActivityRow(index, AppLocalizations.of(context)!.running),
+                        ],
+                        ),
+                        ),
                       ],
                     ),
                   );
                 },
               ),
             ),
-            ElevatedButton(onPressed: _changeDay, child: const Text('Increase columns')),
+            ElevatedButton(
+              onPressed: _changeDay,
+              child: const Text("Add Day"),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: _submitData,
+              child: const Text("Submit Data"),
+            ),
           ],
         ),
       ),
     );
   }
 
-  // Method to build a row for each time of the day
   Widget _buildPainRow(int dayIndex, String timeOfDay) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Text(
-              timeOfDay,
-              style: const TextStyle(fontSize: 16),
-            ),
-          ),
-          Expanded(
-            flex: 2,
-            child: SingleChildScrollView(
-              scrollDirection: Axis.horizontal,
-              child: Row(
-                children: painValues.map((entry) {
-                  int painLevel = entry.value;
-                  Color iconColor = painColors[painValues.indexOf(entry)];
-                  return IconButton(
-                    icon: Icon(
-                      entry.key,
-                      color: painLevelsList[dayIndex][timeOfDay] == painLevel ? iconColor : Colors.grey,
-                    ),
-                    onPressed: () {
-                      _updatePainLevel(dayIndex, timeOfDay, painLevel);
-                    },
-                  );
-                }).toList(),
-              ),
-            ),
-          ),
-        ],
-      ),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(timeOfDay, style: const TextStyle(fontSize: 16)),
+        Row(
+          children: painValues.map((entry) {
+            final icon = entry.key;
+            final value = entry.value;
+            final color = painColors[value ~/ 2]; // Divide by 2 to get the correct color index
+            return IconButton(
+              icon: Icon(icon, color: color),
+              onPressed: () => _updatePainLevel(dayIndex, timeOfDay, value),
+            );
+          }).toList(),
+        ),
+      ],
     );
   }
 
-  // Method to build a row for each activity type
   Widget _buildActivityRow(int dayIndex, String activityType) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 4.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Expanded(
-            child: Text(
-              activityType,
-              style: const TextStyle(fontSize: 16),
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Text(activityType, style: const TextStyle(fontSize: 16)),
+        SizedBox(
+          width: 60,
+          child: TextField(
+            keyboardType: TextInputType.number,
+            onChanged: (newValue) => _updateActivityLevel(dayIndex, activityType, newValue),
+            decoration: const InputDecoration(
+              border: UnderlineInputBorder(),
+              hintText: "0",
             ),
           ),
-          Expanded(
-            flex: 2,
-            child: TextField(
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                hintText: activityLevelsList[dayIndex][activityType]?.toString() ?? '0',
-              ),
-              onChanged: (newValue) {
-                _updateActivityLevel(dayIndex, activityType, newValue);
-              },
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }
